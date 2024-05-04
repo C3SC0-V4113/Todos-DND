@@ -1,6 +1,6 @@
 import { Theme, UIState } from "@/contracts/types/TUiStore";
+import { onCheckingTheme, onSetTheme } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { onCheckingTheme, onSetTheme } from "store";
 
 export const useUiStore = () => {
   const dispatch = useDispatch();
