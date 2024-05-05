@@ -1,6 +1,3 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -12,25 +9,12 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6).max(50),
-});
+import { Link, Form as RouterForm } from "react-router-dom";
+import { useLoginForm } from "./useLoginForm";
 
 export const LoginForm = () => {
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
+  const { form, onSubmit } = useLoginForm();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
   return (
     <div className="flex flex-col">
       <Form {...form}>
@@ -68,9 +52,14 @@ export const LoginForm = () => {
             )}
           />
           <Button type="submit">Login</Button>
-          <Button variant={"outline"}>Google</Button>
         </form>
       </Form>
+      <RouterForm method="post">
+        <input name="formId" hidden defaultValue="google" />
+        <Button type="submit" variant={"outline"}>
+          Google
+        </Button>
+      </RouterForm>
       <Link to={"register"}>
         <Button variant={"link"}>Register</Button>
       </Link>
