@@ -12,7 +12,15 @@ export const authSlice = createSlice({
     errorMessage: null,
   } as AuthState,
   reducers: {
-    login: (state, action: PayloadAction<AuthState>) => {
+    login: (
+      state,
+      action: PayloadAction<{
+        uid: null | string;
+        email: null | string;
+        displayName: null | string;
+        photoURL: null | string;
+      }>
+    ) => {
       state.status = "authenticated";
       state.uid = action.payload.uid;
       state.email = action.payload.email;
@@ -20,7 +28,7 @@ export const authSlice = createSlice({
       state.photoURL = action.payload.photoURL;
       state.errorMessage = null;
     },
-    logout: (state, action: PayloadAction<AuthState>) => {
+    logout: (state, action: PayloadAction<{ errorMessage: string | null }>) => {
       state.status = "not-authenticated";
       state.uid = null;
       state.email = null;
