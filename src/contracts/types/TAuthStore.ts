@@ -51,3 +51,8 @@ export type LoginActionProps = {
       }
   >;
 };
+
+export type AuthLoaderProps = {
+  CheckAuth: () => Status;
+  checkingAuthentication: () => () => Promise<void>;
+};

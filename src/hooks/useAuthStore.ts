@@ -1,6 +1,10 @@
+import { FirebaseAuth } from "@/api/apiConfig";
 import API from "@/api/apiServices";
-import { checkingCredentials, login, logout } from "@/store";
-import { useDispatch } from "react-redux";
+import { checkingCredentials, IRootState, login, logout } from "@/store";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { redirect } from "react-router-dom";
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
@@ -54,9 +58,61 @@ export const useAuthStore = () => {
     );
   };
 
+  const startCreatingUserWithEmail = async ({
+    email,
+    password,
+    displayName,
+  }: {
+    email: string;
+    password: string;
+    displayName: string;
+  }) => {
+    dispatch(checkingCredentials());
+
+    const { ok, uid, photoURL, errorMessage } =
+      await API.auth.registerUserWithEmail({
+        email,
+        password,
+        displayName,
+      });
+
+    if (!ok) return dispatch(logout({ errorMessage: errorMessage! }));
+
+    dispatch(login({ uid: uid!, displayName, email, photoURL: photoURL! }));
+  };
+
+  const startLogout = async () => {
+    dispatch(checkingCredentials());
+    await API.auth.logoutFirebase();
+
+    // dispatch(clearNotesLogout());
+    dispatch(logout({ errorMessage: "" }));
+  };
+
+  const CheckAuth = () => {
+    const { status } = useSelector((state: IRootState) => state.auth);
+    useEffect(() => {
+      onAuthStateChanged(FirebaseAuth, async (user) => {
+        if (!user) {
+          dispatch(logout({ errorMessage: "" }));
+          return redirect("/auth");
+        }
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(login({ uid, email, displayName, photoURL }));
+        redirect("/");
+        // dispatch(startLoadingNotes());
+      });
+    }, []);
+
+    return status;
+  };
+
   return {
+    CheckAuth,
     checkingAuthentication,
+    startCreatingUserWithEmail,
     startGoogleSignIn,
     startLoginWithEmail,
+    startLogout,
   };
 };

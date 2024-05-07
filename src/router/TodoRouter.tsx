@@ -5,14 +5,21 @@ import { LayoutAuth } from "./views/auth/Layout";
 import { LoginForm } from "./views/auth/LoginForm";
 import { LoginAction } from "./views/auth/useLoginForm";
 import { useAuthStore } from "@/hooks/useAuthStore";
+import { AuthLoader } from "./views/auth/loaders/AuthLoader";
 
 export const TodoRouter = () => {
-  const { startGoogleSignIn, startLoginWithEmail } = useAuthStore();
+  const {
+    startGoogleSignIn,
+    startLoginWithEmail,
+    CheckAuth,
+    checkingAuthentication,
+  } = useAuthStore();
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <LayoutTodo />,
+      loader: AuthLoader({ CheckAuth, checkingAuthentication }),
       children: [
         {
           index: true,
