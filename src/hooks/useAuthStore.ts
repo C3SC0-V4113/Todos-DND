@@ -4,15 +4,12 @@ import { checkingCredentials, IRootState, login, logout } from "@/store";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { redirect } from "react-router-dom";
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
 
-  const checkingAuthentication = () => {
-    return async () => {
-      dispatch(checkingCredentials());
-    };
+  const checkingAuthentication = async () => {
+    return dispatch(checkingCredentials());
   };
 
   const startGoogleSignIn = async () => {
@@ -93,17 +90,11 @@ export const useAuthStore = () => {
     const { status } = useSelector((state: IRootState) => state.auth);
     useEffect(() => {
       onAuthStateChanged(FirebaseAuth, async (user) => {
-        if (!user) {
-          dispatch(logout({ errorMessage: "" }));
-          return redirect("/auth");
-        }
+        if (!user) return dispatch(logout({ errorMessage: "" }));
         const { uid, email, displayName, photoURL } = user;
         dispatch(login({ uid, email, displayName, photoURL }));
-        redirect("/");
-        // dispatch(startLoadingNotes());
       });
-    }, []);
-
+    }, [status]);
     return status;
   };
 
