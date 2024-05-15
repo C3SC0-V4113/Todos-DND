@@ -1,7 +1,11 @@
-export const todosLoader =
-  ({ startLoadingTodos }) =>
-  () => {
-    startLoadingTodos();
+import { Todo } from "@/contracts/types/TTodoStore";
 
-    return null;
+export const todosLoader =
+  ({ startLoadingTodos }: { startLoadingTodos: () => Promise<Todo[]> }) =>
+  async () => {
+    const todos = await startLoadingTodos();
+
+    console.log(todos);
+
+    return todos;
   };

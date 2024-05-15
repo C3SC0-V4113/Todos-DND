@@ -13,6 +13,7 @@ export const todoSlice = createSlice({
     },
     addNewTodo: (state, action: PayloadAction<Todo>) => {
       state.todos.push(action.payload);
+      state.isSaving = false;
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
@@ -20,6 +21,7 @@ export const todoSlice = createSlice({
     },
     setTodos: (state, action: PayloadAction<Todo[]>) => {
       state.todos = action.payload;
+      state.isSaving = false;
     },
   },
 });

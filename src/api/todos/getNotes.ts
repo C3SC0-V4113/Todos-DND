@@ -1,13 +1,33 @@
 import { Todo } from "@/contracts/types/TTodoStore";
 import { FirebaseError } from "firebase/app";
+import { collection, getDocs } from "firebase/firestore/lite";
+import { FirebaseDB } from "../apiConfig";
 
-export const getNotes = (uid: string) => {
+export const getNotes = async (uid: string) => {
   try {
+    console.log("getting todos...");
     if (!uid) throw new Error("uid del usuario no existe");
 
-    const todos = [] as Todo[];
+    const collectionRef = collection(FirebaseDB, `${uid}/todo-app/todos/`);
+    const docs = await getDocs(collectionRef);
+
+    const todos = new Array<Todo>();
+
+    docs.forEach((doc) => {
+      const data = doc.data() as Todo;
+      todos.push({
+        ...data,
+        id: doc.id,
+      });
+    });
+
+    console.log(todos);
+
     return {
+      ok: true,
       todos,
+      errorCode: null,
+      errorMessage: null,
     };
   } catch (error) {
     // Handle Errors here.
@@ -17,12 +37,14 @@ export const getNotes = (uid: string) => {
 
       return {
         ok: false,
+        todos: [] as Todo[],
         errorCode,
         errorMessage,
       };
     } else {
       return {
         ok: false,
+        todos: [] as Todo[],
         errorCode: "520",
         errorMessage: "Unkown error",
       };

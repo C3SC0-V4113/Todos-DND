@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTodoForm } from "./useTodoForm";
+import { TodoList } from "./TodoList";
 
 export const TodoHome = () => {
   const { form, onSubmit } = useTodoForm();
@@ -30,6 +31,7 @@ export const TodoHome = () => {
           <Button type="submit" className="hidden" />
         </form>
       </Form>
+      <TodoList />
     </div>
   );
 };

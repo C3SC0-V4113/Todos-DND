@@ -12,20 +12,17 @@ export const useTodoStore = () => {
 
   const startNewTodo = async (name: string) => {
     dispatch(savingTodo());
-    console.log(uid);
-    const todo = {
-      id: "1",
-      name,
-      order: 1,
-      checked: false,
-    };
-    return dispatch(addNewTodo(todo));
+    const todo = await API.todos.createNote(uid!, name);
+    console.log(todo);
+    return dispatch(addNewTodo(todo.newTodo!));
   };
 
   const startLoadingTodos = async () => {
     dispatch(savingTodo());
     const todos = await API.todos.getNotes(uid!);
+    console.log(todos);
     dispatch(setTodos(todos.todos!));
+    return todos.todos;
   };
 
   return {
