@@ -23,8 +23,17 @@ export const todoSlice = createSlice({
       state.todos = action.payload;
       state.isSaving = false;
     },
+    updateOrderTodos: (state, action: PayloadAction<Todo[]>) => {
+      state.todos = action.payload;
+      state.isSaving = false;
+    },
   },
 });
 // Action creators are generated for each case reducer function
-export const { addNewTodo, deleteTodo, savingTodo, setTodos } =
-  todoSlice.actions;
+export const {
+  addNewTodo,
+  deleteTodo,
+  savingTodo,
+  setTodos,
+  updateOrderTodos,
+} = todoSlice.actions;

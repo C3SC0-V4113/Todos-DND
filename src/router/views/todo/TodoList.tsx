@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export const TodoList = () => {
   const todos = useLoaderData() as Todo[];
+
   return (
     <div className="flex flex-col mt-4 rounded bg-primary text-primary-foreground">
       {todos.map((todo) => (

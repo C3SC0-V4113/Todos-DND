@@ -20,9 +20,11 @@ export const getTodos = async (uid: string) => {
       });
     });
 
+    const sortedTodos = todos.sort((a, b) => a.order - b.order);
+
     return {
       ok: true,
-      todos,
+      todos: sortedTodos,
       errorCode: null,
       errorMessage: null,
     };
