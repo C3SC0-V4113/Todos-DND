@@ -5,7 +5,6 @@ import { FirebaseDB } from "../apiConfig";
 
 export const getNotes = async (uid: string) => {
   try {
-    console.log("getting todos...");
     if (!uid) throw new Error("uid del usuario no existe");
 
     const collectionRef = collection(FirebaseDB, `${uid}/todo-app/todos/`);
@@ -20,8 +19,6 @@ export const getNotes = async (uid: string) => {
         id: doc.id,
       });
     });
-
-    console.log(todos);
 
     return {
       ok: true,

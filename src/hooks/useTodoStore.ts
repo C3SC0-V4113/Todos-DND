@@ -20,7 +20,6 @@ export const useTodoStore = () => {
   const startLoadingTodos = async () => {
     dispatch(savingTodo());
     const todos = await API.todos.getNotes(uid!);
-    console.log(todos);
     dispatch(setTodos(todos.todos!));
     return todos.todos;
   };

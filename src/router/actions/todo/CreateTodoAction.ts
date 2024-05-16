@@ -13,6 +13,6 @@ export const CreateTodoAction =
   async (actionArg: ActionFunctionArgs) => {
     const formData = await actionArg.request.formData();
     const newTodo = formData.get("todo") as string;
-    startNewTodo(newTodo);
-    return null;
+
+    return startNewTodo(newTodo);
   };
