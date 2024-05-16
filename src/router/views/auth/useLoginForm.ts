@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ActionFunctionArgs, useSubmit } from "react-router-dom";
-import { LoginActionProps } from "@/contracts/types/TAuthStore";
+import { useSubmit } from "react-router-dom";
 
 export const useLoginForm = () => {
   const submit = useSubmit();
@@ -34,24 +33,3 @@ export const useLoginForm = () => {
     onSubmit,
   };
 };
-
-export const LoginAction =
-  ({ startGoogleSignIn, startLoginWithEmail }: LoginActionProps) =>
-  async (actionArg: ActionFunctionArgs) => {
-    const formData = await actionArg.request.formData();
-    const formId = formData.get("formId");
-    switch (formId) {
-      case "normal":
-        startLoginWithEmail({
-          email: formData.get("email")?.toString() || "",
-          password: formData.get("password")?.toString() || "",
-        });
-        break;
-      case "google":
-        startGoogleSignIn();
-        break;
-      default:
-        break;
-    }
-    return null;
-  };

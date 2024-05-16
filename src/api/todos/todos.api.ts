@@ -1,7 +1,7 @@
-import { createNote } from "./createNote";
-import { getNotes } from "./getNotes";
+import { createTodo } from "./createTodo";
+import { getTodos } from "./getTodos";
 
 export const todos = {
-  getNotes,
-  createNote,
+  getTodos,
+  createTodo,
 };

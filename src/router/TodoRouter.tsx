@@ -6,11 +6,7 @@ import {
 import { LayoutTodo } from "./views/todo/Layout";
 import { LayoutAuth } from "./views/auth/Layout";
 import { LoginForm } from "./views/auth/LoginForm";
-import { LoginAction } from "./views/auth/useLoginForm";
 import { useAuthStore } from "@/hooks/useAuthStore";
-import { AuthLoader } from "./views/auth/loaders/AuthLoader";
-import { ProtectedLoader } from "./views/auth/loaders/ProtectedLoader";
-import { CheckingLoader } from "./views/auth/loaders/CheckingLoader";
 import { CheckingPage } from "./views/auth/CheckingPage";
 import { useUiStore } from "@/hooks/useUiStore";
 import { useEffect } from "react";
@@ -18,6 +14,10 @@ import { TodoHome } from "./views/todo/TodoHome";
 import { CreateTodoAction } from "./actions/todo/CreateTodoAction";
 import { useTodoStore } from "@/hooks/useTodoStore";
 import { todosLoader } from "./loaders/todo/todosLoader";
+import { ProtectedLoader } from "./loaders/auth/ProtectedLoader";
+import { AuthLoader } from "./loaders/auth/AuthLoader";
+import { CheckingLoader } from "./loaders/auth/CheckingLoader";
+import { LoginAction } from "./actions/auth/LoginAction";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();

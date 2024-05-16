@@ -12,14 +12,14 @@ export const useTodoStore = () => {
 
   const startNewTodo = async (name: string) => {
     dispatch(savingTodo());
-    const todo = await API.todos.createNote(uid!, name);
+    const todo = await API.todos.createTodo(uid!, name);
     console.log(todo);
     return dispatch(addNewTodo(todo.newTodo!));
   };
 
   const startLoadingTodos = async () => {
     dispatch(savingTodo());
-    const todos = await API.todos.getNotes(uid!);
+    const todos = await API.todos.getTodos(uid!);
     dispatch(setTodos(todos.todos!));
     return todos.todos;
   };

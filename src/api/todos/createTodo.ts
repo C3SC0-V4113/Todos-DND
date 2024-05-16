@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore/lite";
 import { FirebaseDB } from "../apiConfig";
 
-export const createNote = async (uid: string, name: string) => {
+export const createTodo = async (uid: string, name: string) => {
   try {
     if (!uid) throw new Error("uid del usuario no existe");
 

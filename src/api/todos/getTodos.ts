@@ -3,7 +3,7 @@ import { FirebaseError } from "firebase/app";
 import { collection, getDocs } from "firebase/firestore/lite";
 import { FirebaseDB } from "../apiConfig";
 
-export const getNotes = async (uid: string) => {
+export const getTodos = async (uid: string) => {
   try {
     if (!uid) throw new Error("uid del usuario no existe");
 
