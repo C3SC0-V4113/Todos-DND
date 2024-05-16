@@ -9,18 +9,20 @@ export const useTodoForm = () => {
     todo: z.string().min(4, "Todo must be at least 4 characters long"),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    fetcher.submit(values, {
-      method: "POST",
-    });
-  };
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       todo: "",
     },
   });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    fetcher.submit(values, {
+      method: "POST",
+    });
+
+    form.reset();
+  };
 
   return {
     form,
