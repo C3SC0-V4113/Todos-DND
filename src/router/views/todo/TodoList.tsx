@@ -1,26 +1,46 @@
 import { Todo } from "@/contracts/types/TTodoStore";
-import { useLoaderData } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useFetcher, useLoaderData } from "react-router-dom";
+import { TodoItem } from "./TodoItem";
+import { useCallback, useState } from "react";
 
 export const TodoList = () => {
   const todos = useLoaderData() as Todo[];
+  const fetcher = useFetcher();
+  const [todosState, setTodosState] = useState<Todo[]>(todos);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const moveTodo = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      if (isUpdating) return;
+
+      const updatedTodos = [...todos];
+      const [movedTodo] = updatedTodos.splice(dragIndex, 1);
+      updatedTodos.splice(hoverIndex, 0, movedTodo);
+
+      const reorderedTodos = updatedTodos.map((todo, index) => ({
+        ...todo,
+        order: index + 1, // Order starts at 1
+      }));
+
+      setTodosState(reorderedTodos);
+      setIsUpdating(true);
+
+      fetcher.submit(
+        { todos: JSON.stringify(reorderedTodos) },
+        { method: "post", action: "/order" }
+      );
+
+      setTimeout(() => {
+        setIsUpdating(false);
+      }, 100);
+    },
+    [todos, fetcher, isUpdating]
+  );
 
   return (
     <div className="flex flex-col mt-4 rounded bg-primary text-primary-foreground">
-      {todos.map((todo) => (
-        <div className="flex justify-between w-full px-2" key={todo.id}>
-          <div className="flex gap-2">
-            <Checkbox id={todo.id} className="my-auto" />
-            <label className="my-auto" htmlFor={todo.id}>
-              {todo.name}
-            </label>
-          </div>
-          <Button variant={"link"}>
-            <FaTimes className="text-primary-foreground hover:text-destructive" />
-          </Button>
-        </div>
+      {todosState.map((todo, index) => (
+        <TodoItem key={todo.id} index={index} todo={todo} moveTodo={moveTodo} />
       ))}
     </div>
   );

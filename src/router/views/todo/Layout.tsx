@@ -2,10 +2,12 @@ import { Outlet } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { useUiStore } from "@/hooks/useUiStore";
+import { useAuthStore } from "@/hooks/useAuthStore";
 
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
-import { useAuthStore } from "@/hooks/useAuthStore";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export const LayoutTodo = () => {
   const { theme, toggleTheme } = useUiStore();
@@ -40,7 +42,9 @@ export const LayoutTodo = () => {
               </Button>
             </div>
           </div>
-          <Outlet />
+          <DndProvider backend={HTML5Backend}>
+            <Outlet />
+          </DndProvider>
         </div>
         <p className="text-center">Drag and drop to reorder list</p>
       </div>

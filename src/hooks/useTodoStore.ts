@@ -1,5 +1,12 @@
 import API from "@/api/apiServices";
-import { addNewTodo, IRootState, savingTodo, setTodos } from "@/store";
+import { Todo } from "@/contracts/types/TTodoStore";
+import {
+  addNewTodo,
+  IRootState,
+  savingTodo,
+  setTodos,
+  updateOrderTodos,
+} from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useTodoStore = () => {
@@ -24,9 +31,16 @@ export const useTodoStore = () => {
     return todos.todos;
   };
 
+  const startReorderTodos = async (todos: Todo[]) => {
+    dispatch(savingTodo());
+    await API.todos.updateTodosOrder(uid!, todos);
+    return dispatch(updateOrderTodos(todos));
+  };
+
   return {
     startSavingTodo,
     startNewTodo,
     startLoadingTodos,
+    startReorderTodos,
   };
 };
