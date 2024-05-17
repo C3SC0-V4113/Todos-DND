@@ -6,8 +6,14 @@ import { useAuthStore } from "@/hooks/useAuthStore";
 
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
-import { HTML5Backend } from "react-dnd-html5-backend";
+// import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 import { DndProvider } from "react-dnd";
+
+const options = {
+  enableMouseEvents: true,
+  enableKeyboardEvents: true,
+};
 
 export const LayoutTodo = () => {
   const { theme, toggleTheme } = useUiStore();
@@ -42,7 +48,7 @@ export const LayoutTodo = () => {
               </Button>
             </div>
           </div>
-          <DndProvider backend={HTML5Backend}>
+          <DndProvider backend={TouchBackend} options={options}>
             <Outlet />
           </DndProvider>
         </div>
