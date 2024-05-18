@@ -30,6 +30,18 @@ export const todoSlice = createSlice({
       state.todos = action.payload;
       state.isSaving = false;
     },
+    updateTodoChecked: (
+      state,
+      action: PayloadAction<{ todoId: string; checked: boolean }>
+    ) => {
+      const updatedTodo = state.todos.find(
+        (todo) => todo.id === action.payload.todoId
+      );
+      if (updatedTodo) {
+        updatedTodo.checked = action.payload.checked;
+      }
+      state.isSaving = false;
+    },
   },
 });
 // Action creators are generated for each case reducer function
@@ -40,4 +52,5 @@ export const {
   setTodos,
   updateOrderTodos,
   stopSavingTodo,
+  updateTodoChecked,
 } = todoSlice.actions;

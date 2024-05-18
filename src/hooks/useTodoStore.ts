@@ -8,6 +8,7 @@ import {
   setTodos,
   stopSavingTodo,
   updateOrderTodos,
+  updateTodoChecked,
 } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,11 +49,21 @@ export const useTodoStore = () => {
     return dispatch(stopSavingTodo());
   };
 
+  const startCheckingTodo = async (todoId: string, checked: boolean) => {
+    dispatch(savingTodo());
+    const response = await API.todos.toggleCheckedTodo(uid!, todoId, checked);
+    if (response.ok) {
+      return dispatch(updateTodoChecked({ todoId, checked }));
+    }
+    return dispatch(stopSavingTodo());
+  };
+
   return {
     startSavingTodo,
     startNewTodo,
     startLoadingTodos,
     startReorderTodos,
     startDeletingTodo,
+    startCheckingTodo,
   };
 };

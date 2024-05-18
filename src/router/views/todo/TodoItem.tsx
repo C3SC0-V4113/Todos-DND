@@ -2,9 +2,19 @@ import { FaTimes } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Todo } from "@/contracts/types/TTodoStore";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useFetcher } from "react-router-dom";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 
 const ItemType = "TODO";
 
@@ -18,6 +28,31 @@ export const TodoItem = ({
   moveTodo: (dragIndex: number, hoverIndex: number) => void;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const fetcher = useFetcher();
+
+  const FormSchema = z.object({
+    ["checked" + index]: z.boolean(),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      ["checked" + index]: todo.checked,
+    },
+  });
+
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      fetcher.submit(
+        {
+          todoId: todo.id,
+          checked: data["checked" + index],
+        },
+        { method: "put", action: "/checked" }
+      );
+    },
+    [fetcher, index, todo.id]
+  );
 
   const [, drop] = useDrop({
     accept: ItemType,
@@ -37,7 +72,6 @@ export const TodoItem = ({
       item.index = hoverIndex;
     },
   });
-  const fetcher = useFetcher();
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemType,
@@ -56,6 +90,11 @@ export const TodoItem = ({
     );
   };
 
+  useEffect(() => {
+    const todoChecked = form.watch(() => form.handleSubmit(onSubmit)());
+    return () => todoChecked.unsubscribe();
+  }, [form, onSubmit]);
+
   return (
     <div
       ref={ref}
@@ -64,10 +103,25 @@ export const TodoItem = ({
       }`}
     >
       <div className="flex gap-2">
-        <Checkbox id={todo.id} className="my-auto" />
-        <label className="my-auto" htmlFor={todo.id}>
-          {todo.name}
-        </label>
+        <Form {...form}>
+          <form>
+            <FormField
+              control={form.control}
+              name={`checked${index}`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>{todo.name}</FormLabel>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
       </div>
       <Button variant={"link"} onClick={onClick}>
         <FaTimes className="text-primary-foreground hover:text-destructive" />

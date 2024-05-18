@@ -20,6 +20,7 @@ import { CheckingLoader } from "./loaders/auth/CheckingLoader";
 import { LoginAction } from "./actions/auth/LoginAction";
 import { ReorderTodoAction } from "./actions/todo/ReorderTodoAction";
 import { DeleteTodoAction } from "./actions/todo/DeleteTodoAction";
+import { UpdateTodoCheckedAction } from "./actions/todo/UpdateTodoCheckedAction";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
@@ -31,6 +32,7 @@ export const TodoRouter = () => {
     startLoadingTodos,
     startReorderTodos,
     startDeletingTodo,
+    startCheckingTodo,
   } = useTodoStore();
 
   useEffect(() => {
@@ -58,6 +60,10 @@ export const TodoRouter = () => {
         {
           path: "delete",
           action: DeleteTodoAction({ startDeletingTodo }),
+        },
+        {
+          path: "checked",
+          action: UpdateTodoCheckedAction({ startCheckingTodo }),
         },
         {
           path: "*",
