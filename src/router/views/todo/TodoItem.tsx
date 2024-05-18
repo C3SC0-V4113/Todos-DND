@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Todo } from "@/contracts/types/TTodoStore";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { useFetcher } from "react-router-dom";
 
 const ItemType = "TODO";
 
@@ -36,6 +37,7 @@ export const TodoItem = ({
       item.index = hoverIndex;
     },
   });
+  const fetcher = useFetcher();
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemType,
@@ -46,6 +48,13 @@ export const TodoItem = ({
   });
 
   drag(drop(ref));
+
+  const onClick = () => {
+    fetcher.submit(
+      { todoId: todo.id, todoOrder: todo.order },
+      { method: "post", action: "/delete" }
+    );
+  };
 
   return (
     <div
@@ -60,7 +69,7 @@ export const TodoItem = ({
           {todo.name}
         </label>
       </div>
-      <Button variant={"link"}>
+      <Button variant={"link"} onClick={onClick}>
         <FaTimes className="text-primary-foreground hover:text-destructive" />
       </Button>
     </div>

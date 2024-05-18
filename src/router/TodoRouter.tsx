@@ -19,13 +19,19 @@ import { AuthLoader } from "./loaders/auth/AuthLoader";
 import { CheckingLoader } from "./loaders/auth/CheckingLoader";
 import { LoginAction } from "./actions/auth/LoginAction";
 import { ReorderTodoAction } from "./actions/todo/ReorderTodoAction";
+import { DeleteTodoAction } from "./actions/todo/DeleteTodoAction";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
 
   const { checkTheme, theme } = useUiStore();
 
-  const { startNewTodo, startLoadingTodos, startReorderTodos } = useTodoStore();
+  const {
+    startNewTodo,
+    startLoadingTodos,
+    startReorderTodos,
+    startDeletingTodo,
+  } = useTodoStore();
 
   useEffect(() => {
     checkTheme();
@@ -48,6 +54,10 @@ export const TodoRouter = () => {
         {
           path: "order",
           action: ReorderTodoAction({ startReorderTodos }),
+        },
+        {
+          path: "delete",
+          action: DeleteTodoAction({ startDeletingTodo }),
         },
         {
           path: "*",

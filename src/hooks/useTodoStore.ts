@@ -2,9 +2,11 @@ import API from "@/api/apiServices";
 import { Todo } from "@/contracts/types/TTodoStore";
 import {
   addNewTodo,
+  deleteTodo,
   IRootState,
   savingTodo,
   setTodos,
+  stopSavingTodo,
   updateOrderTodos,
 } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,10 +39,20 @@ export const useTodoStore = () => {
     return dispatch(updateOrderTodos(todos));
   };
 
+  const startDeletingTodo = async (todoId: string, todoOrder: number) => {
+    dispatch(savingTodo());
+    const response = await API.todos.deleteTodo(uid!, todoId, todoOrder);
+    if (response.ok) {
+      return dispatch(deleteTodo(response.todoId!));
+    }
+    return dispatch(stopSavingTodo());
+  };
+
   return {
     startSavingTodo,
     startNewTodo,
     startLoadingTodos,
     startReorderTodos,
+    startDeletingTodo,
   };
 };

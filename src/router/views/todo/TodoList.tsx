@@ -1,13 +1,17 @@
 import { Todo } from "@/contracts/types/TTodoStore";
 import { useFetcher, useLoaderData } from "react-router-dom";
 import { TodoItem } from "./TodoItem";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const TodoList = () => {
   const todos = useLoaderData() as Todo[];
   const fetcher = useFetcher();
   const [todosState, setTodosState] = useState<Todo[]>(todos);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    setTodosState(todos);
+  }, [todos]);
 
   const moveTodo = useCallback(
     (dragIndex: number, hoverIndex: number) => {

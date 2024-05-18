@@ -11,6 +11,9 @@ export const todoSlice = createSlice({
     savingTodo: (state) => {
       state.isSaving = true;
     },
+    stopSavingTodo: (state) => {
+      state.isSaving = false;
+    },
     addNewTodo: (state, action: PayloadAction<Todo>) => {
       state.todos.push(action.payload);
       state.isSaving = false;
@@ -36,4 +39,5 @@ export const {
   savingTodo,
   setTodos,
   updateOrderTodos,
+  stopSavingTodo,
 } = todoSlice.actions;
