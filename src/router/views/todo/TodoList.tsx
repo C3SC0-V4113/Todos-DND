@@ -2,6 +2,7 @@ import { Todo } from "@/contracts/types/TTodoStore";
 import { useFetcher, useLoaderData } from "react-router-dom";
 import { TodoItem } from "./TodoItem";
 import { useCallback, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export const TodoList = () => {
   const todos = useLoaderData() as Todo[];
@@ -42,10 +43,37 @@ export const TodoList = () => {
   );
 
   return (
-    <div className="flex flex-col mt-4 rounded bg-primary text-primary-foreground">
-      {todosState.map((todo, index) => (
-        <TodoItem key={todo.id} index={index} todo={todo} moveTodo={moveTodo} />
-      ))}
-    </div>
+    <>
+      <div className="flex flex-col mt-4 rounded-t bg-primary text-primary-foreground">
+        {todosState.map((todo, index) => (
+          <TodoItem
+            key={todo.id}
+            index={index}
+            todo={todo}
+            moveTodo={moveTodo}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between py-2 align-middle border-t rounded-b border-t-primary-foreground bg-primary text-primary-foreground">
+        <p className="px-4 my-auto">{`${
+          todosState.filter((todo) => todo.checked === false).length
+        } items left`}</p>
+        <Button variant={"link"} className="text-primary-foreground">
+          Clear Completed
+        </Button>
+      </div>
+
+      <div className="flex justify-around mt-4 rounded bg-primary text-primary-foreground">
+        <Button variant={"link"} className="text-primary-foreground">
+          All
+        </Button>
+        <Button variant={"link"} className="text-primary-foreground">
+          Active
+        </Button>
+        <Button variant={"link"} className="text-primary-foreground">
+          Completed
+        </Button>
+      </div>
+    </>
   );
 };

@@ -69,16 +69,21 @@ export const TodoItem = ({
   return (
     <div
       ref={ref}
-      className={`flex justify-between w-full px-2 ${
+      className={`flex border-b last:border-b-0 border-b-primary-foreground justify-between w-full px-2 ${
         isDragging ? "opacity-50" : ""
       }`}
     >
-      <div className="flex gap-2">
+      <div className="flex justify-center gap-2 my-auto align-middle">
         <Checkbox
+          className="my-auto"
           checked={todo.checked}
           onClick={() => onChangeChecked(todo.checked)}
         />
-        <label>{todo.name}</label>
+        <label
+          className={`my-auto ${todo.checked && "line-through opacity-50"}`}
+        >
+          {todo.name}
+        </label>
       </div>
       <Button variant={"link"} onClick={onClick}>
         <FaTimes className="text-primary-foreground hover:text-destructive" />
