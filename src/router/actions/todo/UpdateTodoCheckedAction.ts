@@ -24,14 +24,14 @@ export const UpdateTodoCheckedAction =
   async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const todoId = formData.get("todoId") as string;
-    const checked = formData.get("checked")! as unknown as boolean;
+    const checked = formData.get("checked") as string;
 
     console.log({
       todoId,
       checked,
     });
 
-    startCheckingTodo(todoId, checked);
+    startCheckingTodo(todoId, checked === "true" ? true : false);
 
     return "Hola";
   };
