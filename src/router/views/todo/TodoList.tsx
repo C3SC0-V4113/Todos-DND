@@ -1,5 +1,5 @@
 import { Todo } from "@/contracts/types/TTodoStore";
-import { useFetcher, useLoaderData } from "react-router-dom";
+import { NavLink, useFetcher, useLoaderData } from "react-router-dom";
 import { TodoItem } from "./TodoItem";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -64,15 +64,42 @@ export const TodoList = () => {
       </div>
 
       <div className="flex justify-around mt-4 rounded bg-primary text-primary-foreground">
-        <Button variant={"link"} className="text-primary-foreground">
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isActive
+              ? "text-destructive"
+              : isPending
+              ? "text-primary-foreground"
+              : ""
+          }
+          to={"/"}
+        >
           All
-        </Button>
-        <Button variant={"link"} className="text-primary-foreground">
+        </NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isActive
+              ? "text-destructive"
+              : isPending
+              ? "text-primary-foreground"
+              : ""
+          }
+          to={"/?filter=active"}
+        >
           Active
-        </Button>
-        <Button variant={"link"} className="text-primary-foreground">
+        </NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isActive
+              ? "text-destructive"
+              : isPending
+              ? "text-primary-foreground"
+              : ""
+          }
+          to={"/?filter=completed"}
+        >
           Completed
-        </Button>
+        </NavLink>
       </div>
     </>
   );

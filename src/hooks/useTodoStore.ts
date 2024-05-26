@@ -27,9 +27,9 @@ export const useTodoStore = () => {
     return dispatch(addNewTodo(todo.newTodo!));
   };
 
-  const startLoadingTodos = async () => {
+  const startLoadingTodos = async (filter: string) => {
     dispatch(savingTodo());
-    const todos = await API.todos.getTodos(uid!);
+    const todos = await API.todos.getTodos(uid!, filter);
     dispatch(setTodos(todos.todos!));
     return todos.todos;
   };
