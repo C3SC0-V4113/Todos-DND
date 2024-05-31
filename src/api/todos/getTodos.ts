@@ -7,8 +7,6 @@ export const getTodos = async (uid: string, filter: string) => {
   try {
     if (!uid) throw new Error("uid del usuario no existe");
 
-    console.log(filter);
-
     const collectionRef = collection(FirebaseDB, `${uid}/todo-app/todos/`);
     let q;
 

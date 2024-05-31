@@ -1,5 +1,10 @@
 import { Todo } from "@/contracts/types/TTodoStore";
-import { NavLink, useFetcher, useLoaderData } from "react-router-dom";
+import {
+  NavLink,
+  useFetcher,
+  useLoaderData,
+  useLocation,
+} from "react-router-dom";
 import { TodoItem } from "./TodoItem";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -42,6 +47,9 @@ export const TodoList = () => {
     [todos, fetcher, isUpdating]
   );
 
+  const { search } = useLocation();
+  const filter = new URLSearchParams(search).get("filter");
+
   return (
     <>
       <div className="flex flex-col mt-4 rounded-t bg-primary text-primary-foreground">
@@ -58,19 +66,21 @@ export const TodoList = () => {
         <p className="px-4 my-auto">{`${
           todosState.filter((todo) => todo.checked === false).length
         } items left`}</p>
-        <Button variant={"link"} className="text-primary-foreground">
-          Clear Completed
-        </Button>
+        <fetcher.Form method="POST" action="/delete-checked">
+          <Button variant={"link"} className="text-primary-foreground">
+            Clear Completed
+          </Button>
+        </fetcher.Form>
       </div>
 
       <div className="flex justify-around mt-4 rounded bg-primary text-primary-foreground">
         <NavLink
           className={({ isActive, isPending }) =>
-            isActive
-              ? "text-destructive"
+            isActive && filter === null
+              ? "py-2 text-destructive"
               : isPending
-              ? "text-primary-foreground"
-              : ""
+              ? "py-2 text-primary-foreground"
+              : "py-2"
           }
           to={"/"}
         >
@@ -78,11 +88,11 @@ export const TodoList = () => {
         </NavLink>
         <NavLink
           className={({ isActive, isPending }) =>
-            isActive
-              ? "text-destructive"
+            isActive && filter === "active"
+              ? "py-2 text-destructive"
               : isPending
-              ? "text-primary-foreground"
-              : ""
+              ? "py-2 text-primary-foreground"
+              : "py-2"
           }
           to={"/?filter=active"}
         >
@@ -90,11 +100,11 @@ export const TodoList = () => {
         </NavLink>
         <NavLink
           className={({ isActive, isPending }) =>
-            isActive
-              ? "text-destructive"
+            isActive && filter === "completed"
+              ? "py-2 text-destructive"
               : isPending
-              ? "text-primary-foreground"
-              : ""
+              ? "py-2 text-primary-foreground"
+              : "py-2"
           }
           to={"/?filter=completed"}
         >

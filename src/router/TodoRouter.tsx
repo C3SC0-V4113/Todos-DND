@@ -21,6 +21,7 @@ import { LoginAction } from "./actions/auth/LoginAction";
 import { ReorderTodoAction } from "./actions/todo/ReorderTodoAction";
 import { DeleteTodoAction } from "./actions/todo/DeleteTodoAction";
 import { UpdateTodoCheckedAction } from "./actions/todo/UpdateTodoCheckedAction";
+import { DeleteCheckedTodos } from "./actions/todo/DeleteCheckedTodos";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
@@ -33,6 +34,7 @@ export const TodoRouter = () => {
     startReorderTodos,
     startDeletingTodo,
     startCheckingTodo,
+    startDeletingCheckedTodos,
   } = useTodoStore();
 
   useEffect(() => {
@@ -64,6 +66,10 @@ export const TodoRouter = () => {
         {
           path: "checked",
           action: UpdateTodoCheckedAction({ startCheckingTodo }),
+        },
+        {
+          path: "delete-checked",
+          action: DeleteCheckedTodos({ startDeletingCheckedTodos }),
         },
         {
           path: "*",

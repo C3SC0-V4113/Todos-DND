@@ -34,6 +34,12 @@ export const useTodoStore = () => {
     return todos.todos;
   };
 
+  const startDeletingCheckedTodos = async () => {
+    dispatch(savingTodo());
+    await API.todos.deleteCheckedTodos(uid!);
+    return dispatch(stopSavingTodo());
+  };
+
   const startReorderTodos = async (todos: Todo[]) => {
     dispatch(savingTodo());
     await API.todos.updateTodosOrder(uid!, todos);
@@ -65,5 +71,6 @@ export const useTodoStore = () => {
     startReorderTodos,
     startDeletingTodo,
     startCheckingTodo,
+    startDeletingCheckedTodos,
   };
 };

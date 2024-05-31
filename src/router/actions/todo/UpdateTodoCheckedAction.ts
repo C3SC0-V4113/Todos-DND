@@ -26,12 +26,5 @@ export const UpdateTodoCheckedAction =
     const todoId = formData.get("todoId") as string;
     const checked = formData.get("checked") as string;
 
-    console.log({
-      todoId,
-      checked,
-    });
-
-    startCheckingTodo(todoId, checked === "true" ? true : false);
-
-    return "Hola";
+    return startCheckingTodo(todoId, checked === "true" ? true : false);
   };

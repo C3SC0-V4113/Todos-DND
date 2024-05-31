@@ -13,7 +13,6 @@ export const toggleCheckedTodo = async (
 
     const todoDocRef = doc(FirebaseDB, `${uid}/todo-app/todos/${todoId}`);
 
-    console.log(checked);
     await updateDoc(todoDocRef, { checked });
 
     return {
