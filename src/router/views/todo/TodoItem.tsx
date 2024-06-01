@@ -1,55 +1,15 @@
-import { useRef } from "react";
+import { FaTimes } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Todo } from "@/contracts/types/TTodoStore";
 
-import { useDrag, useDrop } from "react-dnd";
-
-import { FaTimes } from "react-icons/fa";
-
 import { useTodoForm } from "./useTodoForm";
+import { useTodoDragAndDrop } from "./useTodoDragAndDrop";
 
-const ItemType = "TODO";
-
-export const TodoItem = ({
-  todo,
-  index,
-  moveTodo,
-}: {
-  todo: Todo;
-  index: number;
-  moveTodo: (dragIndex: number, hoverIndex: number) => void;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { onDeleteTodo, onChangeChecked } = useTodoForm();
-
-  const [, drop] = useDrop({
-    accept: ItemType,
-    hover(item: { index: number }) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
-
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      moveTodo(dragIndex, hoverIndex);
-
-      item.index = hoverIndex;
-    },
-  });
-
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemType,
-    item: { index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+export const TodoItem = ({ todo, index }: { todo: Todo; index: number }) => {
+  const { drag, drop, isDragging, ref } = useTodoDragAndDrop(index);
+  const { onDeleteTodo, onChangeChecked, isSaving } = useTodoForm();
 
   drag(drop(ref));
 
@@ -74,6 +34,7 @@ export const TodoItem = ({
       </div>
       <Button
         variant={"link"}
+        disabled={isSaving}
         onClick={() => onDeleteTodo(todo.id, todo.order)}
       >
         <FaTimes className="text-primary-foreground hover:text-destructive" />

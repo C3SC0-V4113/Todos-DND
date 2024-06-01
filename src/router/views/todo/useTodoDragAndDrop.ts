@@ -1,7 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTodoForm } from "./useTodoForm";
+import { useDrag, useDrop } from "react-dnd";
 
-export const useTodoDragAndDrop = () => {
+const ItemType = "TODO";
+
+export const useTodoDragAndDrop = (index: number) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const { todosState, onReorderedTodos, setTodosState } = useTodoForm();
 
@@ -30,7 +34,37 @@ export const useTodoDragAndDrop = () => {
     [isUpdating, onReorderedTodos, setTodosState, todosState]
   );
 
+  const [, drop] = useDrop({
+    accept: ItemType,
+    hover(item: { index: number }) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      moveTodo(dragIndex, hoverIndex);
+
+      item.index = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemType,
+    item: { index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
   return {
-    moveTodo,
+    ref,
+    isDragging,
+    drop,
+    drag,
   };
 };

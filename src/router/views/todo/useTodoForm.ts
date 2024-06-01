@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Todo } from "@/contracts/types/TTodoStore";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/store";
 
 export const useTodoForm = () => {
   const todos = useLoaderData() as Todo[];
   const [todosState, setTodosState] = useState<Todo[]>(todos);
   const [checkedTodos, setCheckedTodos] = useState(0);
-
+  const { isSaving } = useSelector((state: IRootState) => state.todo);
   const fetcher = useFetcher();
+  const { search } = useLocation();
+
+  const filter = new URLSearchParams(search).get("filter");
+
   const formSchema = z.object({
     todo: z.string().min(4, "Todo must be at least 4 characters long"),
   });
@@ -72,6 +78,8 @@ export const useTodoForm = () => {
     formInput,
     todosState,
     checkedTodos,
+    isSaving,
+    filter,
     setTodosState,
     onSubmitInput,
     onClearComplete,

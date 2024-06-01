@@ -12,7 +12,8 @@ import { TodoList } from "./TodoList";
 import { TodoFilterForm } from "./TodoFilterForm";
 
 export const TodoHome = () => {
-  const { formInput, onSubmitInput } = useTodoForm();
+  const { formInput, isSaving, onSubmitInput } = useTodoForm();
+
   return (
     <div>
       <Form {...formInput}>
@@ -23,13 +24,17 @@ export const TodoHome = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Create a new todo..." {...field} />
+                  <Input
+                    placeholder="Create a new todo..."
+                    disabled={isSaving}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="hidden" />
+          <Button type="submit" disabled={isSaving} className="hidden" />
         </form>
       </Form>
       <TodoList />

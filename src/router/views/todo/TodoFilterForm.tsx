@@ -1,4 +1,5 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useTodoForm } from "./useTodoForm";
 
 export const TodoFilterForm = (
   props: React.DetailedHTMLProps<
@@ -6,14 +7,18 @@ export const TodoFilterForm = (
     HTMLDivElement
   >
 ) => {
-  const { search } = useLocation();
-  const filter = new URLSearchParams(search).get("filter");
+  const { isSaving, filter } = useTodoForm();
   const { className } = props;
 
   return (
     <div
-      className={`flex justify-around mt-4 rounded bg-primary text-primary-foreground ${className}`}
+      className={`flex relative justify-around mt-4 rounded bg-primary text-primary-foreground ${className}`}
     >
+      <div
+        className={`absolute w-full h-full bg-white opacity-50 ${
+          isSaving ? "z-50" : "-z-50"
+        }`}
+      ></div>
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === null
