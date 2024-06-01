@@ -13,6 +13,7 @@ import { DndProvider } from "react-dnd";
 const options = {
   enableMouseEvents: true,
   enableKeyboardEvents: true,
+  delayTouchStart: 500,
 };
 
 export const LayoutTodo = () => {
@@ -31,8 +32,8 @@ export const LayoutTodo = () => {
         src={`/images/bg-desktop-${theme}.jpg`}
         alt={`desktop-background-${theme}`}
       />
-      <div className="flex flex-col justify-between h-screen px-6 py-8">
-        <div>
+      <div className="flex flex-col justify-between px-6 py-8 h-dvh">
+        <div className="h-full">
           <div className="flex justify-between">
             <h1 className="my-auto text-2xl">TODO</h1>
             <div className="flex">
@@ -52,7 +53,6 @@ export const LayoutTodo = () => {
             <Outlet />
           </DndProvider>
         </div>
-        <p className="text-center">Drag and drop to reorder list</p>
       </div>
     </>
   );

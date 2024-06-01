@@ -9,13 +9,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTodoForm } from "./useTodoForm";
 import { TodoList } from "./TodoList";
+import { TodoFilterForm } from "./TodoFilterForm";
 
 export const TodoHome = () => {
   const { form, onSubmit } = useTodoForm();
   return (
-    <div className="mt-4">
+    <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-4" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="todo"
@@ -32,6 +33,8 @@ export const TodoHome = () => {
         </form>
       </Form>
       <TodoList />
+      <TodoFilterForm className="md:hidden" />
+      <p className="py-4 text-center">Drag and drop to reorder list</p>
     </div>
   );
 };
