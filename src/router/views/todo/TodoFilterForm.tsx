@@ -17,10 +17,10 @@ export const TodoFilterForm = (
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === null
-            ? "py-2 text-destructive"
+            ? "py-2 font-semibold text-destructive"
             : isPending
-            ? "py-2 text-primary-foreground"
-            : "py-2"
+            ? "py-2 font-semibold text-primary-foreground"
+            : "py-2 font-semibold"
         }
         to={"/"}
       >
@@ -29,10 +29,10 @@ export const TodoFilterForm = (
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === "active"
-            ? "py-2 text-destructive"
+            ? "py-2 font-semibold text-destructive"
             : isPending
-            ? "py-2 text-primary-foreground"
-            : "py-2"
+            ? "py-2 font-semibold text-primary-foreground"
+            : "py-2 font-semibold"
         }
         to={"/?filter=active"}
       >
@@ -41,10 +41,10 @@ export const TodoFilterForm = (
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === "completed"
-            ? "py-2 text-destructive"
+            ? "py-2 font-semibold text-destructive"
             : isPending
-            ? "py-2 text-primary-foreground"
-            : "py-2"
+            ? "py-2 font-semibold text-primary-foreground"
+            : "py-2 font-semibold"
         }
         to={"/?filter=completed"}
       >

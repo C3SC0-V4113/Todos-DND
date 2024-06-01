@@ -12,13 +12,13 @@ import { TodoList } from "./TodoList";
 import { TodoFilterForm } from "./TodoFilterForm";
 
 export const TodoHome = () => {
-  const { form, onSubmit } = useTodoForm();
+  const { formInput, onSubmitInput } = useTodoForm();
   return (
     <div>
-      <Form {...form}>
-        <form className="mt-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <Form {...formInput}>
+        <form className="mt-4" onSubmit={formInput.handleSubmit(onSubmitInput)}>
           <FormField
-            control={form.control}
+            control={formInput.control}
             name="todo"
             render={({ field }) => (
               <FormItem>

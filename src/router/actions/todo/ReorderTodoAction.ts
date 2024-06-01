@@ -13,6 +13,5 @@ export const ReorderTodoAction =
   async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const todos = JSON.parse(formData.get("todos") as string);
-    console.log(todos);
     return startReorderTodos(todos);
   };
