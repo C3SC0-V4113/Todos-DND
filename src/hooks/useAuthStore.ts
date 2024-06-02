@@ -1,6 +1,12 @@
 import { FirebaseAuth } from "@/api/apiConfig";
 import API from "@/api/apiServices";
-import { checkingCredentials, IRootState, login, logout } from "@/store";
+import {
+  checkingCredentials,
+  clearTodos,
+  IRootState,
+  login,
+  logout,
+} from "@/store";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,8 +88,8 @@ export const useAuthStore = () => {
     dispatch(checkingCredentials());
     await API.auth.logoutFirebase();
 
-    // dispatch(clearNotesLogout());
     dispatch(logout({ errorMessage: "" }));
+    dispatch(clearTodos());
   };
 
   const CheckAuth = () => {

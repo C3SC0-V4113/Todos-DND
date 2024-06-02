@@ -42,15 +42,20 @@ export const todoSlice = createSlice({
       }
       state.isSaving = false;
     },
+    clearTodos: (state) => {
+      state.isSaving = false;
+      state.todos = [];
+    },
   },
 });
 // Action creators are generated for each case reducer function
 export const {
   addNewTodo,
+  clearTodos,
   deleteTodo,
   savingTodo,
   setTodos,
-  updateOrderTodos,
   stopSavingTodo,
+  updateOrderTodos,
   updateTodoChecked,
 } = todoSlice.actions;
