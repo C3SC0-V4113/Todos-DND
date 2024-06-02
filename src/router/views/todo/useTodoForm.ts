@@ -13,6 +13,7 @@ export const useTodoForm = () => {
   const todos = useLoaderData() as Todo[];
   const [todosState, setTodosState] = useState<Todo[]>(todos);
   const [checkedTodos, setCheckedTodos] = useState(0);
+  const [notCheckedTodos, setNotCheckedTodos] = useState(0);
   const { isSaving } = useSelector((state: IRootState) => state.todo);
   const fetcher = useFetcher();
   const { search } = useLocation();
@@ -29,6 +30,9 @@ export const useTodoForm = () => {
 
   useEffect(() => {
     setCheckedTodos(todosState.filter((todo) => todo.checked === false).length);
+    setNotCheckedTodos(
+      todosState.filter((todo) => todo.checked === true).length
+    );
   }, [todosState]);
 
   const formInput = useForm<z.infer<typeof formSchema>>({
@@ -80,6 +84,7 @@ export const useTodoForm = () => {
     checkedTodos,
     isSaving,
     filter,
+    notCheckedTodos,
     setTodosState,
     onSubmitInput,
     onClearComplete,

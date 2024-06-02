@@ -25,6 +25,7 @@ export const TodoHome = () => {
               <FormItem>
                 <FormControl>
                   <Input
+                    className="bg-primary placeholder:text-muted-foreground"
                     placeholder="Create a new todo..."
                     disabled={isSaving}
                     {...field}
@@ -39,7 +40,9 @@ export const TodoHome = () => {
       </Form>
       <TodoList />
       <TodoFilterForm className="md:hidden" />
-      <p className="py-4 text-center">Drag and drop to reorder list</p>
+      <p className="py-4 text-center text-muted-foreground">
+        Drag and drop to reorder list
+      </p>
     </div>
   );
 };

@@ -16,8 +16,8 @@ export const TodoItem = ({ todo, index }: { todo: Todo; index: number }) => {
   return (
     <div
       ref={ref}
-      className={`flex border-b last:border-b-0 border-b-primary-foreground justify-between w-full px-2 ${
-        isDragging ? "opacity-50" : ""
+      className={`flex border-b last:border-b-0 border-b-muted-foreground justify-between cursor-grab w-full px-2 ${
+        isDragging ? "opacity-50 cursor-grabbing" : ""
       }`}
     >
       <div className="flex justify-center gap-2 my-auto align-middle">
@@ -27,7 +27,11 @@ export const TodoItem = ({ todo, index }: { todo: Todo; index: number }) => {
           onClick={() => onChangeChecked(todo.checked, todo.id)}
         />
         <label
-          className={`my-auto ${todo.checked && "line-through opacity-50"}`}
+          className={`my-auto  ${
+            todo.checked
+              ? "line-through text-muted-foreground"
+              : "text-primary-foreground"
+          }`}
         >
           {todo.name}
         </label>

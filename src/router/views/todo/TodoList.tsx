@@ -6,8 +6,14 @@ import { TodoFilterForm } from "./TodoFilterForm";
 import { useTodoForm } from "./useTodoForm";
 
 export const TodoList = () => {
-  const { todosState, checkedTodos, isSaving, filter, onClearComplete } =
-    useTodoForm();
+  const {
+    todosState,
+    checkedTodos,
+    isSaving,
+    filter,
+    notCheckedTodos,
+    onClearComplete,
+  } = useTodoForm();
 
   return (
     <>
@@ -18,13 +24,13 @@ export const TodoList = () => {
           ))}
         </ScrollArea>
       </div>
-      <div className="flex justify-between py-2 align-middle border-t rounded-b border-t-primary-foreground bg-primary text-primary-foreground">
-        <p className="px-4 my-auto">{`${checkedTodos} items left`}</p>
+      <div className="flex justify-between py-2 align-middle border-t rounded-b border-t-muted-foreground bg-primary text-primary-foreground">
+        <p className="px-4 my-auto text-sm font-medium text-muted-foreground">{`${checkedTodos} items left`}</p>
         <TodoFilterForm className="hidden md:mt-0 w-52 md:flex" />
         <Button
           variant={"link"}
-          className="text-primary-foreground"
-          disabled={isSaving || filter === "active"}
+          className="text-muted-foreground"
+          disabled={isSaving || filter === "active" || notCheckedTodos === 0}
           onClick={onClearComplete}
         >
           Clear Completed

@@ -15,17 +15,17 @@ export const TodoFilterForm = (
       className={`flex relative justify-around mt-4 rounded bg-primary text-primary-foreground ${className}`}
     >
       <div
-        className={`absolute w-full h-full bg-white opacity-50 ${
+        className={`absolute w-full h-full bg-primary opacity-50 ${
           isSaving ? "z-50" : "-z-50"
         }`}
       ></div>
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === null
-            ? "py-2 font-semibold text-destructive"
+            ? "py-2 font-semibold text-secondary-foreground"
             : isPending
-            ? "py-2 font-semibold text-primary-foreground"
-            : "py-2 font-semibold"
+            ? "py-2 font-semibold text-muted-foreground"
+            : "py-2 font-semibold text-muted-foreground"
         }
         to={"/"}
       >
@@ -34,10 +34,10 @@ export const TodoFilterForm = (
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === "active"
-            ? "py-2 font-semibold text-destructive"
+            ? "py-2 font-semibold text-secondary-foreground"
             : isPending
-            ? "py-2 font-semibold text-primary-foreground"
-            : "py-2 font-semibold"
+            ? "py-2 font-semibold text-muted-foreground"
+            : "py-2 font-semibold text-muted-foreground"
         }
         to={"/?filter=active"}
       >
@@ -46,10 +46,10 @@ export const TodoFilterForm = (
       <NavLink
         className={({ isActive, isPending }) =>
           isActive && filter === "completed"
-            ? "py-2 font-semibold text-destructive"
+            ? "py-2 font-semibold text-secondary-foreground"
             : isPending
-            ? "py-2 font-semibold text-primary-foreground"
-            : "py-2 font-semibold"
+            ? "py-2 font-semibold text-muted-foreground"
+            : "py-2 font-semibold text-muted-foreground"
         }
         to={"/?filter=completed"}
       >

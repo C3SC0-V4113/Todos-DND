@@ -39,13 +39,13 @@ export const LayoutTodo = () => {
             <div className="flex">
               <Button onClick={() => toggleTheme()} variant={"link"}>
                 {theme === "dark" ? (
-                  <IoSunnySharp className="w-6 h-6" />
+                  <IoSunnySharp className="w-6 h-6 text-foreground" />
                 ) : (
-                  <IoMoonSharp className="w-6 h-6" />
+                  <IoMoonSharp className="w-6 h-6 text-foreground" />
                 )}
               </Button>
               <Button onClick={() => startLogout()} variant={"link"}>
-                <CiLogout className="w-6 h-6" />
+                <CiLogout className="w-6 h-6 text-foreground" />
               </Button>
             </div>
           </div>
