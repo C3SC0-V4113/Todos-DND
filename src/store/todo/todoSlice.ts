@@ -1,5 +1,13 @@
 import { Todo, TodoState } from "@/contracts/types/TTodoStore";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  startCheckingTodo,
+  startDeletingCheckedTodos,
+  startDeletingTodo,
+  startLoadingTodos,
+  startNewTodo,
+  startReorderTodos,
+} from "./todoThunks";
 
 export const todoSlice = createSlice({
   name: "todo",
@@ -8,54 +16,81 @@ export const todoSlice = createSlice({
     isSaving: false,
   } as TodoState,
   reducers: {
-    savingTodo: (state) => {
-      state.isSaving = true;
-    },
-    stopSavingTodo: (state) => {
-      state.isSaving = false;
-    },
-    addNewTodo: (state, action: PayloadAction<Todo>) => {
-      state.todos.push(action.payload);
-      state.isSaving = false;
-    },
-    deleteTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      state.isSaving = false;
-    },
-    setTodos: (state, action: PayloadAction<Todo[]>) => {
-      state.todos = action.payload;
-      state.isSaving = false;
-    },
-    updateOrderTodos: (state, action: PayloadAction<Todo[]>) => {
-      state.todos = action.payload;
-      state.isSaving = false;
-    },
-    updateTodoChecked: (
-      state,
-      action: PayloadAction<{ todoId: string; checked: boolean }>
-    ) => {
-      const updatedTodo = state.todos.find(
-        (todo) => todo.id === action.payload.todoId
-      );
-      if (updatedTodo) {
-        updatedTodo.checked = action.payload.checked;
-      }
-      state.isSaving = false;
-    },
     clearTodos: (state) => {
       state.isSaving = false;
       state.todos = [];
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(startNewTodo.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(startNewTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
+        state.todos.push(action.payload);
+        state.isSaving = false;
+      })
+      .addCase(startLoadingTodos.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(
+        startLoadingTodos.fulfilled,
+        (state, action: PayloadAction<Todo[]>) => {
+          state.todos = action.payload;
+          state.isSaving = false;
+        }
+      )
+      .addCase(startDeletingCheckedTodos.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(
+        startDeletingCheckedTodos.fulfilled,
+        (state, action: PayloadAction<Todo[]>) => {
+          state.todos = action.payload;
+          state.isSaving = false;
+        }
+      )
+      .addCase(startReorderTodos.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(
+        startReorderTodos.fulfilled,
+        (state, action: PayloadAction<Todo[]>) => {
+          state.todos = action.payload;
+          state.isSaving = false;
+        }
+      )
+      .addCase(startDeletingTodo.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(
+        startDeletingTodo.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.todos = state.todos.filter(
+            (todo) => todo.id !== action.payload
+          );
+          state.isSaving = false;
+        }
+      )
+      .addCase(startCheckingTodo.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(
+        startCheckingTodo.fulfilled,
+        (
+          state,
+          action: PayloadAction<{ todoId: string; checked: boolean }>
+        ) => {
+          const updatedTodo = state.todos.find(
+            (todo) => todo.id === action.payload.todoId
+          );
+          if (updatedTodo) {
+            updatedTodo.checked = action.payload.checked;
+          }
+          state.isSaving = false;
+        }
+      );
+  },
 });
 // Action creators are generated for each case reducer function
-export const {
-  addNewTodo,
-  clearTodos,
-  deleteTodo,
-  savingTodo,
-  setTodos,
-  stopSavingTodo,
-  updateOrderTodos,
-  updateTodoChecked,
-} = todoSlice.actions;
+export const { clearTodos } = todoSlice.actions;
