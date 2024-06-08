@@ -12,7 +12,7 @@ import { useUiStore } from "@/hooks/useUiStore";
 import { useEffect } from "react";
 import { TodoHome } from "./views/todo/TodoHome";
 import { CreateTodoAction } from "./actions/todo/CreateTodoAction";
-import { useTodoStore } from "@/hooks/useTodoStore";
+
 import { todosLoader } from "./loaders/todo/todosLoader";
 import { ProtectedLoader } from "./loaders/auth/ProtectedLoader";
 import { AuthLoader } from "./loaders/auth/AuthLoader";
@@ -27,15 +27,6 @@ export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
 
   const { checkTheme, theme } = useUiStore();
-
-  const {
-    startNewTodo,
-    startLoadingTodos,
-    startReorderTodos,
-    startDeletingTodo,
-    startCheckingTodo,
-    startDeletingCheckedTodos,
-  } = useTodoStore();
 
   useEffect(() => {
     checkTheme();
@@ -52,24 +43,24 @@ export const TodoRouter = () => {
         {
           index: true,
           element: <TodoHome />,
-          action: CreateTodoAction({ startNewTodo }),
-          loader: todosLoader({ startLoadingTodos }),
+          action: CreateTodoAction(),
+          loader: todosLoader(),
         },
         {
           path: "order",
-          action: ReorderTodoAction({ startReorderTodos }),
+          action: ReorderTodoAction(),
         },
         {
           path: "delete",
-          action: DeleteTodoAction({ startDeletingTodo }),
+          action: DeleteTodoAction(),
         },
         {
           path: "checked",
-          action: UpdateTodoCheckedAction({ startCheckingTodo }),
+          action: UpdateTodoCheckedAction(),
         },
         {
           path: "delete-checked",
-          action: DeleteCheckedTodos({ startDeletingCheckedTodos }),
+          action: DeleteCheckedTodos(),
         },
         {
           path: "*",

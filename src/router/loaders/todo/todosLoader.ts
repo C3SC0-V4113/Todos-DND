@@ -1,15 +1,17 @@
-import { Todo } from "@/contracts/types/TTodoStore";
+import { store } from "@/store";
+import { startLoadingTodos } from "@/store/todo/todoThunks";
 import { LoaderFunctionArgs } from "react-router-dom";
 
 export const todosLoader =
-  ({
-    startLoadingTodos,
-  }: {
-    startLoadingTodos: (filter: string) => Promise<Todo[]>;
-  }) =>
+  () =>
   async ({ request }: LoaderFunctionArgs) => {
     const url = new URL(request.url);
     const filter = url.searchParams.get("filter");
-    const todos = await startLoadingTodos(filter ? filter : "all");
-    return todos;
+    const { uid } = store.getState().auth;
+
+    return store
+      .dispatch(
+        startLoadingTodos({ filter: filter ? filter : "all", uid: uid! })
+      )
+      .unwrap();
   };

@@ -2,23 +2,27 @@ import API from "@/api/apiServices";
 import { Todo } from "@/contracts/types/TTodoStore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const startNewTodo = createAsyncThunk(
-  "todo/startNewTodo",
-  async ({ uid, name }: { uid: string; name: string }) => {
-    const response = await API.todos.createTodo(uid, name);
-    if (response.ok) {
-      return response.newTodo;
-    }
+export const startNewTodo = createAsyncThunk<
+  Todo,
+  { uid: string; name: string }
+>("todo/startNewTodo", async ({ uid, name }, { rejectWithValue }) => {
+  const response = await API.todos.createTodo(uid, name);
+  if (response.newTodo) {
+    return response.newTodo;
   }
-);
+  return rejectWithValue(response.errorMessage);
+});
 
-export const startLoadingTodos = createAsyncThunk(
-  "todo/startLoadingTodos",
-  async ({ uid, filter }: { uid: string; filter: string }) => {
-    const response = await API.todos.getTodos(uid, filter);
+export const startLoadingTodos = createAsyncThunk<
+  Todo[],
+  { uid: string; filter: string }
+>("todo/startLoadingTodos", async ({ uid, filter }, { rejectWithValue }) => {
+  const response = await API.todos.getTodos(uid, filter);
+  if (response.ok) {
     return response.todos;
   }
-);
+  return rejectWithValue(response.errorMessage);
+});
 
 export const startDeletingCheckedTodos = createAsyncThunk(
   "todo/startDeletingCheckedTodos",

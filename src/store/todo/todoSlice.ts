@@ -30,6 +30,10 @@ export const todoSlice = createSlice({
         state.todos.push(action.payload);
         state.isSaving = false;
       })
+      .addCase(startNewTodo.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      })
       .addCase(startLoadingTodos.pending, (state) => {
         state.isSaving = true;
       })
@@ -40,6 +44,10 @@ export const todoSlice = createSlice({
           state.isSaving = false;
         }
       )
+      .addCase(startLoadingTodos.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      })
       .addCase(startDeletingCheckedTodos.pending, (state) => {
         state.isSaving = true;
       })
