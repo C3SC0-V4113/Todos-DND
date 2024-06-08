@@ -9,13 +9,11 @@ export const DeleteTodoAction =
     const todoId = formData.get("todoId") as string;
     const todoOrder = formData.get("todoOrder") as string;
     const orderNumber = +todoOrder;
-    const { uid } = store.getState().auth;
 
     return store.dispatch(
       startDeletingTodo({
         todoId,
         todoOrder: orderNumber,
-        uid: uid!,
       })
     );
   };

@@ -7,11 +7,7 @@ export const todosLoader =
   async ({ request }: LoaderFunctionArgs) => {
     const url = new URL(request.url);
     const filter = url.searchParams.get("filter");
-    const { uid } = store.getState().auth;
-
     return store
-      .dispatch(
-        startLoadingTodos({ filter: filter ? filter : "all", uid: uid! })
-      )
+      .dispatch(startLoadingTodos({ filter: filter ? filter : "all" }))
       .unwrap();
   };

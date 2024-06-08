@@ -9,13 +9,11 @@ export const UpdateTodoCheckedAction =
     const todoId = formData.get("todoId") as string;
     const checked = formData.get("checked") as string;
     const checkedBoolean = checked === "true" ? true : false;
-    const { uid } = store.getState().auth;
 
     return store.dispatch(
       startCheckingTodo({
         todoId,
         checked: checkedBoolean,
-        uid: uid!,
       })
     );
   };
