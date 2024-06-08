@@ -1,5 +1,4 @@
-import { store } from "@/store";
-import { startCheckingTodo } from "@/store/todo/todoThunks";
+import { startCheckingTodo, store } from "@/store";
 import { ActionFunctionArgs } from "react-router-dom";
 
 export const UpdateTodoCheckedAction =

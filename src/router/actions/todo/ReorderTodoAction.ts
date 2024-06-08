@@ -1,5 +1,4 @@
-import { store } from "@/store";
-import { startReorderTodos } from "@/store/todo/todoThunks";
+import { startReorderTodos, store } from "@/store";
 import { ActionFunctionArgs } from "react-router-dom";
 
 export const ReorderTodoAction =

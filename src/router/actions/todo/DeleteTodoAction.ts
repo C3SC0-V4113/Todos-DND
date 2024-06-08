@@ -1,5 +1,4 @@
-import { store } from "@/store";
-import { startDeletingTodo } from "@/store/todo/todoThunks";
+import { startDeletingTodo, store } from "@/store";
 import { ActionFunctionArgs } from "react-router-dom";
 
 export const DeleteTodoAction =

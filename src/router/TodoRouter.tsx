@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   createBrowserRouter,
   Navigate,
@@ -6,22 +7,24 @@ import {
 import { LayoutTodo } from "./views/todo/Layout";
 import { LayoutAuth } from "./views/auth/Layout";
 import { LoginForm } from "./views/auth/LoginForm";
-import { useAuthStore } from "@/hooks/useAuthStore";
 import { CheckingPage } from "./views/auth/CheckingPage";
-import { useUiStore } from "@/hooks/useUiStore";
-import { useEffect } from "react";
 import { TodoHome } from "./views/todo/TodoHome";
-import { CreateTodoAction } from "./actions/todo/CreateTodoAction";
-
-import { todosLoader } from "./loaders/todo/todosLoader";
-import { ProtectedLoader } from "./loaders/auth/ProtectedLoader";
-import { AuthLoader } from "./loaders/auth/AuthLoader";
-import { CheckingLoader } from "./loaders/auth/CheckingLoader";
-import { LoginAction } from "./actions/auth/LoginAction";
-import { ReorderTodoAction } from "./actions/todo/ReorderTodoAction";
-import { DeleteTodoAction } from "./actions/todo/DeleteTodoAction";
-import { UpdateTodoCheckedAction } from "./actions/todo/UpdateTodoCheckedAction";
-import { DeleteCheckedTodos } from "./actions/todo/DeleteCheckedTodos";
+import { useUiStore } from "@/hooks/useUiStore";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import {
+  CreateTodoAction,
+  DeleteCheckedTodos,
+  DeleteTodoAction,
+  LoginAction,
+  ReorderTodoAction,
+  UpdateTodoCheckedAction,
+} from "./actions";
+import {
+  AuthLoader,
+  CheckingLoader,
+  ProtectedLoader,
+  todosLoader,
+} from "./loaders";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();

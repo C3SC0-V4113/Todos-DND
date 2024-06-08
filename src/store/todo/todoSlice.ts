@@ -7,7 +7,7 @@ import {
   startLoadingTodos,
   startNewTodo,
   startReorderTodos,
-} from "./todoThunks";
+} from "./";
 
 export const todoSlice = createSlice({
   name: "todo",
@@ -58,6 +58,10 @@ export const todoSlice = createSlice({
           state.isSaving = false;
         }
       )
+      .addCase(startDeletingCheckedTodos.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      })
       .addCase(startReorderTodos.pending, (state) => {
         state.isSaving = true;
       })
@@ -68,6 +72,10 @@ export const todoSlice = createSlice({
           state.isSaving = false;
         }
       )
+      .addCase(startReorderTodos.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      })
       .addCase(startDeletingTodo.pending, (state) => {
         state.isSaving = true;
       })
@@ -80,6 +88,11 @@ export const todoSlice = createSlice({
           state.isSaving = false;
         }
       )
+      .addCase(startDeletingTodo.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      })
+
       .addCase(startCheckingTodo.pending, (state) => {
         state.isSaving = true;
       })
@@ -97,7 +110,11 @@ export const todoSlice = createSlice({
           }
           state.isSaving = false;
         }
-      );
+      )
+      .addCase(startCheckingTodo.rejected, (state, action) => {
+        state.isSaving = false;
+        console.error(action.payload);
+      });
   },
 });
 // Action creators are generated for each case reducer function

@@ -1,5 +1,4 @@
-import { store } from "@/store";
-import { startNewTodo } from "@/store/todo/todoThunks";
+import { startNewTodo, store } from "@/store";
 import { ActionFunctionArgs } from "react-router-dom";
 
 export const CreateTodoAction = () => async (actionArg: ActionFunctionArgs) => {
