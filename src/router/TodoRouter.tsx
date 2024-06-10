@@ -22,6 +22,7 @@ import { ReorderTodoAction } from "./actions/todo/ReorderTodoAction";
 import { DeleteTodoAction } from "./actions/todo/DeleteTodoAction";
 import { UpdateTodoCheckedAction } from "./actions/todo/UpdateTodoCheckedAction";
 import { DeleteCheckedTodos } from "./actions/todo/DeleteCheckedTodos";
+import { RegisterForm } from "./views/auth/RegisterForm";
 
 export const TodoRouter = () => {
   const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
@@ -90,7 +91,7 @@ export const TodoRouter = () => {
         {
           path: "register",
           loader: AuthLoader({ status }),
-          element: <>Register</>,
+          element: <RegisterForm />,
         },
         {
           path: "*",

@@ -1,17 +1,17 @@
+import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
+  Form,
+  FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { useLoginForm } from "./useLoginForm";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const { form, onSubmit, handleSubmit } = useLoginForm();
 
   return (
@@ -54,17 +54,10 @@ export const LoginForm = () => {
         >
           Login
         </Button>
-        <Button
-          variant={"outline"}
-          className="text-primary-foreground border-primary-foreground hover:bg-muted hover:text-muted-foreground"
-          onClick={() => onSubmit(form.getValues(), "google")}
-        >
-          Google
-        </Button>
       </div>
-      <Link className="self-end" to={"register"}>
+      <Link className="self-end" to={"/auth"}>
         <Button variant={"link"} className="text-muted-foreground">
-          Register
+          Login
         </Button>
       </Link>
     </div>
