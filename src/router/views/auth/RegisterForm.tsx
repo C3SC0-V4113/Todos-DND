@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { useLoginForm } from "./useLoginForm";
+import { useRegisterForm } from "./useRegisterForm";
 
 export const RegisterForm = () => {
-  const { form, onSubmit, handleSubmit } = useLoginForm();
+  const { form, onSubmit, handleSubmit } = useRegisterForm();
 
   return (
     <div className="flex flex-col md:self-center md:w-96">
@@ -25,7 +25,7 @@ export const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="email" type="email" {...field} />
+                  <Input placeholder="Email" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -38,7 +38,24 @@ export const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" type="password" {...field} />
+                  <Input placeholder="Password" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Repeat Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Repeat your Password"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -52,12 +69,12 @@ export const RegisterForm = () => {
           type="submit"
           onClick={handleSubmit((formData) => onSubmit(formData))}
         >
-          Login
+          Register
         </Button>
       </div>
       <Link className="self-end" to={"/auth"}>
         <Button variant={"link"} className="text-muted-foreground">
-          Login
+          Sign In
         </Button>
       </Link>
     </div>

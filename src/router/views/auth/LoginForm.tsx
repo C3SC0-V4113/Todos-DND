@@ -25,7 +25,7 @@ export const LoginForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="email" type="email" {...field} />
+                  <Input placeholder="Email" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -38,7 +38,7 @@ export const LoginForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" type="password" {...field} />
+                  <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -64,7 +64,7 @@ export const LoginForm = () => {
       </div>
       <Link className="self-end" to={"register"}>
         <Button variant={"link"} className="text-muted-foreground">
-          Register
+          Sign Up
         </Button>
       </Link>
     </div>
