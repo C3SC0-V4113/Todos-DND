@@ -10,8 +10,7 @@ export const useLoginForm = () => {
     password: z.string().min(6).max(50),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const formId = "normal";
+  const onSubmit = (values: z.infer<typeof formSchema>, formId = "normal") => {
     submit(
       { ...values, formId },
       {
@@ -28,8 +27,11 @@ export const useLoginForm = () => {
     },
   });
 
+  const { handleSubmit } = form;
+
   return {
     form,
+    handleSubmit,
     onSubmit,
   };
 };

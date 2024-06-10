@@ -11,6 +11,7 @@ import { CheckingPage } from "./views/auth/CheckingPage";
 import { TodoHome } from "./views/todo/TodoHome";
 import { useUiStore } from "@/hooks/useUiStore";
 import { useAuthStore } from "@/hooks/useAuthStore";
+import { RegisterForm } from "./views/auth/RegisterForm";
 import {
   CreateTodoAction,
   DeleteCheckedTodos,
@@ -84,7 +85,7 @@ export const TodoRouter = () => {
         {
           path: "register",
           loader: AuthLoader({ status }),
-          element: <>Register</>,
+          element: <RegisterForm />,
         },
         {
           path: "*",
