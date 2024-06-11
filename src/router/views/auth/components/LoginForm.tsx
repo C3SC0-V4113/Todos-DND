@@ -1,36 +1,23 @@
-import { Button } from "@/components/ui/button";
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  Form,
-  FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { useRegisterForm } from "./useRegisterForm";
+import { useLoginForm } from "./";
 
-export const RegisterForm = () => {
-  const { form, onSubmit, handleSubmit } = useRegisterForm();
+export const LoginForm = () => {
+  const { form, onSubmit, handleSubmit } = useLoginForm();
 
   return (
     <div className="flex flex-col md:self-center md:w-96">
       <Form {...form}>
         <form className="p-2 mt-2 space-y-4 rounded bg-primary text-primary-foreground">
-          <FormField
-            control={form.control}
-            name="displayName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="email"
@@ -57,23 +44,6 @@ export const RegisterForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Repeat Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Repeat your Password"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </form>
       </Form>
       <div className="flex flex-col gap-2 my-4">
@@ -82,12 +52,19 @@ export const RegisterForm = () => {
           type="submit"
           onClick={handleSubmit((formData) => onSubmit(formData))}
         >
-          Register
+          Login
+        </Button>
+        <Button
+          variant={"outline"}
+          className="text-primary-foreground border-primary-foreground hover:bg-muted hover:text-muted-foreground"
+          onClick={() => onSubmit(form.getValues(), "google")}
+        >
+          Google
         </Button>
       </div>
-      <Link className="self-end" to={"/auth"}>
+      <Link className="self-end" to={"register"}>
         <Button variant={"link"} className="text-muted-foreground">
-          Sign In
+          Sign Up
         </Button>
       </Link>
     </div>

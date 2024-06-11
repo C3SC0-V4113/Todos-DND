@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTodoForm } from "./useTodoForm";
-import { TodoList } from "./TodoList";
-import { TodoFilterForm } from "./TodoFilterForm";
+import { TodoFilterForm, TodoList } from "./components";
 
 export const TodoHome = () => {
   const { formInput, isSaving, onSubmitInput } = useTodoForm();

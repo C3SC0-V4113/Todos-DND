@@ -15,16 +15,10 @@ export const startNewTodo = createAsyncThunk<Todo, { name: string }>(
   }
 );
 
-export const startLoadingTodos = createAsyncThunk<
-  Todo[] | null,
-  { filter: string }
->(
+export const startLoadingTodos = createAsyncThunk<Todo[], { filter: string }>(
   "todo/startLoadingTodos",
   async ({ filter }, { rejectWithValue, getState }) => {
     const { auth } = getState() as IRootState;
-    if (!auth.uid) {
-      return null;
-    }
     const response = await API.todos.getTodos(auth.uid, filter);
     if (response.ok) {
       return response.todos;

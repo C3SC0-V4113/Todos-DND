@@ -3,9 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Todo } from "@/contracts/types/TTodoStore";
-
-import { useTodoForm } from "./useTodoForm";
-import { useTodoDragAndDrop } from "./useTodoDragAndDrop";
+import { useTodoDragAndDrop, useTodoForm } from "../";
 
 export const TodoItem = ({ todo, index }: { todo: Todo; index: number }) => {
   const { drag, drop, isDragging, ref } = useTodoDragAndDrop(index);

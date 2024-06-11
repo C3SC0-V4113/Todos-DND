@@ -4,12 +4,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { LayoutTodo } from "./views/todo/Layout";
-import { LayoutAuth } from "./views/auth/Layout";
-import { LoginForm } from "./views/auth/LoginForm";
-import { CheckingPage } from "./views/auth/CheckingPage";
-import { TodoHome } from "./views/todo/TodoHome";
-import { RegisterForm } from "./views/auth/RegisterForm";
+
 import { useUiStore } from "@/hooks/useUiStore";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import {
@@ -27,6 +22,13 @@ import {
   ProtectedLoader,
   todosLoader,
 } from "./loaders";
+import { LayoutTodo, TodoHome } from "./views/todo";
+import {
+  CheckingPage,
+  LayoutAuth,
+  LoginForm,
+  RegisterForm,
+} from "./views/auth";
 
 export const TodoRouter = () => {
   const { CheckAuth } = useAuthStore();

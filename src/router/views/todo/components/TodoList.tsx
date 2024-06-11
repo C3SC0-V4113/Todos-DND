@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-import { TodoItem } from "./TodoItem";
-import { TodoFilterForm } from "./TodoFilterForm";
-import { useTodoForm } from "./useTodoForm";
+import { useTodoForm } from "../";
+import { TodoFilterForm, TodoItem } from ".";
 
 export const TodoList = () => {
   const {
