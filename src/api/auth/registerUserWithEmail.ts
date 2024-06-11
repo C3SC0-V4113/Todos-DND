@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { FirebaseAuth } from "../apiConfig";
+import { FirebaseAuth, handleFirebaseError } from "../apiConfig";
 import { FirebaseError } from "firebase/app";
 
 interface Props {
@@ -34,7 +34,7 @@ export const registerUserWithEmail = async ({
     // Handle Errors here.
     if (error instanceof FirebaseError) {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      const errorMessage = handleFirebaseError(error);
 
       return {
         ok: false,

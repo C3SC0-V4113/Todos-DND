@@ -15,7 +15,7 @@ export const startNewTodo = createAsyncThunk<Todo, { name: string }>(
     toast({
       variant: "destructive",
       title: "Error creating a new Todo",
-      description: `${response.errorCode}-${response.errorMessage}`,
+      description: response.errorMessage,
     });
     return rejectWithValue(response.errorMessage);
   }
@@ -32,7 +32,7 @@ export const startLoadingTodos = createAsyncThunk<Todo[], { filter: string }>(
     toast({
       variant: "destructive",
       title: "Error Loading Todos",
-      description: `${response.errorCode}-${response.errorMessage}`,
+      description: response.errorMessage,
     });
     return rejectWithValue(response.errorMessage);
   },
@@ -59,7 +59,7 @@ export const startDeletingCheckedTodos = createAsyncThunk(
     toast({
       variant: "destructive",
       title: "Error Deleting all Checked Todos",
-      description: `${deleteResponse.errorCode}-${deleteResponse.errorMessage}`,
+      description: deleteResponse.errorMessage,
     });
     return rejectWithValue(deleteResponse.errorMessage);
   }
@@ -77,7 +77,7 @@ export const startReorderTodos = createAsyncThunk<Todo[], { todos: Todo[] }>(
     toast({
       variant: "destructive",
       title: "Error Reordering Todos",
-      description: `${response.errorCode}-${response.errorMessage}`,
+      description: response.errorMessage,
     });
     return rejectWithValue({
       errorMessage: response.errorMessage,
@@ -100,7 +100,7 @@ export const startDeletingTodo = createAsyncThunk<
     toast({
       variant: "destructive",
       title: "Error Deleting the Todo",
-      description: `${response.errorCode}-${response.errorMessage}`,
+      description: response.errorMessage,
     });
     return rejectWithValue(response.errorMessage);
   }
@@ -124,7 +124,7 @@ export const startCheckingTodo = createAsyncThunk<
     toast({
       variant: "destructive",
       title: "Error Checking Todo",
-      description: `${response.errorCode}-${response.errorMessage}`,
+      description: response.errorMessage,
     });
     return rejectWithValue(response.errorMessage);
   }

@@ -1,5 +1,5 @@
 import { FirebaseError } from "firebase/app";
-import { FirebaseAuth } from "../apiConfig";
+import { FirebaseAuth, handleFirebaseError } from "../apiConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 interface Props {
@@ -25,7 +25,7 @@ export const loginWithEmail = async ({ email, password }: Props) => {
     // Handle Errors here.
     if (error instanceof FirebaseError) {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      const errorMessage = handleFirebaseError(error);
 
       return {
         ok: false,

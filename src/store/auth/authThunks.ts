@@ -11,7 +11,7 @@ export const startGoogleSignIn = createAsyncThunk(
       toast({
         variant: "destructive",
         title: "Error Signing in",
-        description: `${result.errorCode}-${result.errorMessage}`,
+        description: result.errorMessage,
       });
       return rejectWithValue(result.errorMessage);
     }
@@ -35,7 +35,7 @@ export const startLoginWithEmail = createAsyncThunk(
       toast({
         variant: "destructive",
         title: "Error Signing in",
-        description: `${result.errorCode}-${result.errorMessage}`,
+        description: result.errorMessage,
       });
       return rejectWithValue(result.errorMessage);
     }
@@ -58,13 +58,13 @@ export const startCreatingUserWithEmail = createAsyncThunk(
     }: { email: string; password: string; displayName: string },
     { rejectWithValue }
   ) => {
-    const { ok, uid, photoURL, errorMessage, errorCode } =
+    const { ok, uid, photoURL, errorMessage } =
       await API.auth.registerUserWithEmail({ email, password, displayName });
     if (!ok) {
       toast({
         variant: "destructive",
         title: "Error Signing up",
-        description: `${errorCode}-${errorMessage}`,
+        description: errorMessage,
       });
       return rejectWithValue(errorMessage);
     }
