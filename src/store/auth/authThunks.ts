@@ -1,12 +1,18 @@
 import API from "@/api/apiServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearTodos } from "../todo";
+import { toast } from "@/components/ui/use-toast";
 
 export const startGoogleSignIn = createAsyncThunk(
   "auth/startGoogleSignIn",
   async (_, { rejectWithValue }) => {
     const result = await API.auth.signInWithGoogle();
     if (!result.ok) {
+      toast({
+        variant: "destructive",
+        title: "Error Signing in",
+        description: `${result.errorCode}-${result.errorMessage}`,
+      });
       return rejectWithValue(result.errorMessage);
     }
     return {
@@ -26,6 +32,11 @@ export const startLoginWithEmail = createAsyncThunk(
   ) => {
     const result = await API.auth.loginWithEmail({ email, password });
     if (!result.ok) {
+      toast({
+        variant: "destructive",
+        title: "Error Signing in",
+        description: `${result.errorCode}-${result.errorMessage}`,
+      });
       return rejectWithValue(result.errorMessage);
     }
     return {
@@ -47,9 +58,14 @@ export const startCreatingUserWithEmail = createAsyncThunk(
     }: { email: string; password: string; displayName: string },
     { rejectWithValue }
   ) => {
-    const { ok, uid, photoURL, errorMessage } =
+    const { ok, uid, photoURL, errorMessage, errorCode } =
       await API.auth.registerUserWithEmail({ email, password, displayName });
     if (!ok) {
+      toast({
+        variant: "destructive",
+        title: "Error Signing up",
+        description: `${errorCode}-${errorMessage}`,
+      });
       return rejectWithValue(errorMessage);
     }
     return { uid: uid!, displayName, email, photoURL: photoURL! };

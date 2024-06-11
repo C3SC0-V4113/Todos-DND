@@ -2,6 +2,7 @@ import API from "@/api/apiServices";
 import { Todo } from "@/contracts/types/TTodoStore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IRootState } from "../store";
+import { toast } from "@/components/ui/use-toast";
 
 export const startNewTodo = createAsyncThunk<Todo, { name: string }>(
   "todo/startNewTodo",
@@ -11,6 +12,11 @@ export const startNewTodo = createAsyncThunk<Todo, { name: string }>(
     if (response.newTodo) {
       return response.newTodo;
     }
+    toast({
+      variant: "destructive",
+      title: "Error creating a new Todo",
+      description: `${response.errorCode}-${response.errorMessage}`,
+    });
     return rejectWithValue(response.errorMessage);
   }
 );
@@ -23,7 +29,21 @@ export const startLoadingTodos = createAsyncThunk<Todo[], { filter: string }>(
     if (response.ok) {
       return response.todos;
     }
+    toast({
+      variant: "destructive",
+      title: "Error Loading Todos",
+      description: `${response.errorCode}-${response.errorMessage}`,
+    });
     return rejectWithValue(response.errorMessage);
+  },
+  {
+    condition: (_, { getState }) => {
+      const { auth } = getState() as IRootState;
+      const fetchStatus = auth.uid;
+      if (!fetchStatus) {
+        return false;
+      }
+    },
   }
 );
 
@@ -36,6 +56,11 @@ export const startDeletingCheckedTodos = createAsyncThunk(
       const response = await API.todos.getTodos(auth.uid!, "");
       return response.todos;
     }
+    toast({
+      variant: "destructive",
+      title: "Error Deleting all Checked Todos",
+      description: `${deleteResponse.errorCode}-${deleteResponse.errorMessage}`,
+    });
     return rejectWithValue(deleteResponse.errorMessage);
   }
 );
@@ -49,6 +74,11 @@ export const startReorderTodos = createAsyncThunk<Todo[], { todos: Todo[] }>(
       return todos;
     }
     const oldList = await API.todos.getTodos(auth.uid!, "");
+    toast({
+      variant: "destructive",
+      title: "Error Reordering Todos",
+      description: `${response.errorCode}-${response.errorMessage}`,
+    });
     return rejectWithValue({
       errorMessage: response.errorMessage,
       todos: oldList,
@@ -67,6 +97,11 @@ export const startDeletingTodo = createAsyncThunk<
     if (response.ok) {
       return todoId;
     }
+    toast({
+      variant: "destructive",
+      title: "Error Deleting the Todo",
+      description: `${response.errorCode}-${response.errorMessage}`,
+    });
     return rejectWithValue(response.errorMessage);
   }
 );
@@ -86,6 +121,11 @@ export const startCheckingTodo = createAsyncThunk<
     if (response.ok) {
       return { todoId, checked };
     }
+    toast({
+      variant: "destructive",
+      title: "Error Checking Todo",
+      description: `${response.errorCode}-${response.errorMessage}`,
+    });
     return rejectWithValue(response.errorMessage);
   }
 );
