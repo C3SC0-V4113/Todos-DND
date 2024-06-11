@@ -27,7 +27,7 @@ export const RegisterForm = () => {
                 <FormControl>
                   <Input placeholder="Name" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
                 <FormControl>
                   <Input placeholder="Email" type="email" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />
@@ -53,7 +53,7 @@ export const RegisterForm = () => {
                 <FormControl>
                   <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />
@@ -70,7 +70,7 @@ export const RegisterForm = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />

@@ -27,7 +27,7 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Email" type="email" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />
@@ -40,7 +40,7 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="dark:text-popover" />
               </FormItem>
             )}
           />
