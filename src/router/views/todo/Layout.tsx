@@ -1,17 +1,8 @@
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/store";
 
 import { Button } from "@/components/ui/button";
-import { useUiStore } from "@/hooks/useUiStore";
-import { useAuthStore } from "@/hooks/useAuthStore";
-
-import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
-import { CiLogout, CiUser } from "react-icons/ci";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { DndProvider } from "react-dnd";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IRootState } from "@/store";
-import { useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,12 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const options = {
-  enableMouseEvents: true,
-  enableKeyboardEvents: true,
-  delayTouchStart: 500,
-};
+import { useUiStore } from "@/hooks/useUiStore";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { useTodoDragAndDrop } from "./useTodoDragAndDrop";
+
+import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
+import { CiLogout, CiUser } from "react-icons/ci";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 const getInitials = (displayName: string | null) => {
   if (displayName === null) {
@@ -48,6 +42,7 @@ const getInitials = (displayName: string | null) => {
 export const LayoutTodo = () => {
   const { theme, toggleTheme } = useUiStore();
   const { startLogout } = useAuthStore();
+  const { onDragEnd } = useTodoDragAndDrop();
   const { photoURL, displayName } = useSelector(
     (state: IRootState) => state.auth
   );
@@ -107,9 +102,9 @@ export const LayoutTodo = () => {
               </DropdownMenu>
             </div>
           </div>
-          <DndProvider backend={TouchBackend} options={options}>
+          <DragDropContext onDragEnd={onDragEnd}>
             <Outlet />
-          </DndProvider>
+          </DragDropContext>
         </div>
       </div>
     </>

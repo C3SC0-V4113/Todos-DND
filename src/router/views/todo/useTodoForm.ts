@@ -29,10 +29,14 @@ export const useTodoForm = () => {
   }, [todos]);
 
   useEffect(() => {
-    setCheckedTodos(todosState.filter((todo) => todo.checked === false).length);
-    setNotCheckedTodos(
-      todosState.filter((todo) => todo.checked === true).length
-    );
+    if (todosState) {
+      setCheckedTodos(
+        todosState.filter((todo) => todo.checked === false).length
+      );
+      setNotCheckedTodos(
+        todosState.filter((todo) => todo.checked === true).length
+      );
+    }
   }, [todosState]);
 
   const formInput = useForm<z.infer<typeof formSchema>>({

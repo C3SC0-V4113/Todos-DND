@@ -1,70 +1,84 @@
-import { useCallback, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useTodoForm } from "./useTodoForm";
-import { useDrag, useDrop } from "react-dnd";
+import { DropResult } from "@hello-pangea/dnd";
+import { IRootState } from "@/store";
 
-const ItemType = "TODO";
+export const useTodoDragAndDrop = () => {
+  const { onReorderedTodos, setTodosState } = useTodoForm();
+  const { todos } = useSelector((state: IRootState) => state.todo);
+  //   (dragIndex: number, hoverIndex: number) => {
+  //     if (isUpdating) return;
 
-export const useTodoDragAndDrop = (index: number) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const { todosState, onReorderedTodos, setTodosState } = useTodoForm();
+  //     const updatedTodos = [...todosState];
+  //     const [movedTodo] = updatedTodos.splice(dragIndex, 1);
+  //     updatedTodos.splice(hoverIndex, 0, movedTodo);
 
-  const moveTodo = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      if (isUpdating) return;
+  //     const reorderedTodos = updatedTodos.map((todo, index) => ({
+  //       ...todo,
+  //       order: index + 1, // Order starts at 1
+  //     }));
 
-      const updatedTodos = [...todosState];
-      const [movedTodo] = updatedTodos.splice(dragIndex, 1);
-      updatedTodos.splice(hoverIndex, 0, movedTodo);
+  //     setTodosState(reorderedTodos);
+  //     setIsUpdating(true);
 
-      const reorderedTodos = updatedTodos.map((todo, index) => ({
-        ...todo,
-        order: index + 1, // Order starts at 1
-      }));
+  //     onReorderedTodos(reorderedTodos);
 
-      setTodosState(reorderedTodos);
-      setIsUpdating(true);
+  //     setTimeout(() => {
+  //       setIsUpdating(false);
+  //     }, 100);
+  //   },
+  //   [isUpdating, onReorderedTodos, setTodosState, todosState]
+  // );
 
-      onReorderedTodos(reorderedTodos);
+  // const [, drop] = useDrop({
+  //   accept: ItemType,
+  //   hover(item: { index: number }) {
+  //     if (!ref.current) {
+  //       return;
+  //     }
+  //     const dragIndex = item.index;
+  //     const hoverIndex = index;
 
-      setTimeout(() => {
-        setIsUpdating(false);
-      }, 100);
-    },
-    [isUpdating, onReorderedTodos, setTodosState, todosState]
-  );
+  //     if (dragIndex === hoverIndex) {
+  //       return;
+  //     }
 
-  const [, drop] = useDrop({
-    accept: ItemType,
-    hover(item: { index: number }) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
+  //     moveTodo(dragIndex, hoverIndex);
 
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+  //     item.index = hoverIndex;
+  //   },
+  // });
 
-      moveTodo(dragIndex, hoverIndex);
+  // const [{ isDragging }, drag] = useDrag({
+  //   type: ItemType,
+  //   item: { index },
+  //   collect: (monitor) => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // });
 
-      item.index = hoverIndex;
-    },
-  });
+  const onDragEnd = (result: DropResult) => {
+    // Manejar el evento de finalización del arrastre aquí, si es necesario
+    const { source, destination } = result;
 
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemType,
-    item: { index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+    if (!destination) {
+      return;
+    }
+
+    const updatedTodos = [...todos];
+    const [movedTodos] = updatedTodos.splice(source.index, 1);
+    updatedTodos.splice(destination.index, 0, movedTodos);
+
+    const reorderedTodos = updatedTodos.map((todo, index) => ({
+      ...todo,
+      order: index + 1,
+    }));
+
+    setTodosState(reorderedTodos);
+    onReorderedTodos(reorderedTodos);
+  };
 
   return {
-    ref,
-    isDragging,
-    drop,
-    drag,
+    onDragEnd,
   };
 };
