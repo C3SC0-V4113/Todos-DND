@@ -20,6 +20,19 @@ export const RegisterForm = () => {
         <form className="p-2 mt-2 space-y-4 rounded bg-primary text-primary-foreground">
           <FormField
             control={form.control}
+            name="displayName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>

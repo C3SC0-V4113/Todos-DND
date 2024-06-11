@@ -10,6 +10,7 @@ export const useRegisterForm = () => {
       email: z.string().email(),
       password: z.string().min(6).max(50),
       confirmPassword: z.string().min(6).max(50),
+      displayName: z.string().min(6).max(50),
     })
     .superRefine(({ password, confirmPassword }, ctx) => {
       if (confirmPassword !== password) {
@@ -36,6 +37,7 @@ export const useRegisterForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      displayName: "",
     },
   });
 
