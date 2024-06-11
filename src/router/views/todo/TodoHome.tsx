@@ -24,13 +24,13 @@ export const TodoHome = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    className="bg-primary placeholder:text-muted-foreground"
+                    className="bg-primary text-primary-foreground placeholder:text-muted-foreground"
                     placeholder="Create a new todo..."
                     disabled={isSaving}
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-accent dark:text-popover" />
               </FormItem>
             )}
           />
