@@ -9,14 +9,15 @@ import { LayoutAuth } from "./views/auth/Layout";
 import { LoginForm } from "./views/auth/LoginForm";
 import { CheckingPage } from "./views/auth/CheckingPage";
 import { TodoHome } from "./views/todo/TodoHome";
+import { RegisterForm } from "./views/auth/RegisterForm";
 import { useUiStore } from "@/hooks/useUiStore";
 import { useAuthStore } from "@/hooks/useAuthStore";
-import { RegisterForm } from "./views/auth/RegisterForm";
 import {
   CreateTodoAction,
   DeleteCheckedTodos,
   DeleteTodoAction,
   LoginAction,
+  RegisterAction,
   ReorderTodoAction,
   UpdateTodoCheckedAction,
 } from "./actions";
@@ -28,7 +29,7 @@ import {
 } from "./loaders";
 
 export const TodoRouter = () => {
-  const { startGoogleSignIn, startLoginWithEmail, CheckAuth } = useAuthStore();
+  const { CheckAuth } = useAuthStore();
 
   const { checkTheme, theme } = useUiStore();
 
@@ -80,12 +81,13 @@ export const TodoRouter = () => {
           index: true,
           element: <LoginForm />,
           loader: AuthLoader({ status }),
-          action: LoginAction({ startGoogleSignIn, startLoginWithEmail }),
+          action: LoginAction(),
         },
         {
           path: "register",
-          loader: AuthLoader({ status }),
           element: <RegisterForm />,
+          loader: AuthLoader({ status }),
+          action: RegisterAction(),
         },
         {
           path: "*",
