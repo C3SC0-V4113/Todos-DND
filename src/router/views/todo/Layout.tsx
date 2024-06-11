@@ -27,7 +27,10 @@ const options = {
   delayTouchStart: 500,
 };
 
-const getInitials = (displayName: string) => {
+const getInitials = (displayName: string | null) => {
+  if (displayName === null) {
+    return "";
+  }
   const words = displayName.split(" ");
   if (words.length === 0) {
     return "";
@@ -77,7 +80,7 @@ export const LayoutTodo = () => {
                 <DropdownMenuTrigger>
                   <Avatar>
                     <AvatarImage src={photoURL || ""} />
-                    <AvatarFallback>{getInitials(displayName!)}</AvatarFallback>
+                    <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-w-52">
