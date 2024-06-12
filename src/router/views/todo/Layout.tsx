@@ -60,7 +60,7 @@ export const LayoutTodo = () => {
         alt={`desktop-background-${theme}`}
       />
       <div className="flex flex-col justify-between px-6 py-8 h-dvh">
-        <div className="h-full">
+        <div className="h-full md:mx-auto md:max-w-[450]">
           <div className="flex justify-between">
             <h1 className="my-auto text-2xl">TODO</h1>
             <div className="flex">
