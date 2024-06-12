@@ -27,7 +27,7 @@ export const TodoItem = ({ todo, index }: { todo: Todo; index: number }) => {
               onClick={() => onChangeChecked(todo.checked, todo.id)}
             />
             <label
-              className={`my-auto  ${
+              className={`my-auto cursor-grab ${
                 todo.checked
                   ? "line-through text-muted-foreground"
                   : "text-primary-foreground"
